@@ -8,9 +8,10 @@ class EventSourcer {
 
   add(num) {
     this.value += num;
-    this.changes[Number.toString(this.length)] = {
+    this.changes[this.length + ''] = {
       'event' : 'add',
       'value': num,
+      'solution' : this.value,
       'change_id' : this.length
     };
     this.current = this.length;
@@ -19,7 +20,7 @@ class EventSourcer {
 
   subtract(num) {
     this.value -= num;
-    this.changes[Number.toString(this.length)] = {
+    this.changes[this.length+''] = {
       'event' : 'sub',
       'value': num,
       'solution' : this.value,
@@ -27,26 +28,28 @@ class EventSourcer {
     };
     this.current = this.length;
     this.length += 1;
-
-    console.log(this.changes);
   }
 
   undo() {
-    let change = this.changes[Number.toString(this.current - 1)]
+    let local = this.current - 1;
+    let change = this.changes[local + ''];
     this.value = change['solution']
     this.current = change['change_id']
   }
   redo() {
-    let change = this.changes[Number.toString(this.current + 1)]
+    let local = this.current + 1;
+    let change = this.changes[local + ''];
     this.value = change['solution']
     this.current = change['change_id']
   }
   bulk_undo(num) {
-    let change = this.changes[Number.toString((this.current + num))]
+    let local = this.current + num;
+    let change = this.changes[local + ''];
     this.value = change['solution']
   }
   bulk_redo(num) {
-    let change = this.changes[Number.toString(this.length - num)]
+    let local = this.current - num;
+    let change = this.changes[local + ''];
     this.value = change['solution']
   }
 }
