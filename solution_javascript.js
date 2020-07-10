@@ -33,21 +33,21 @@ class EventSourcer {
 
   undo() {
     let change = this.changes[Number.toString(this.current - 1)]
-    this.value = this.changes['solution']
-    this.current = this.changes['change_id']
+    this.value = change['solution']
+    this.current = change['change_id']
   }
   redo() {
     let change = this.changes[Number.toString(this.current + 1)]
-    this.value = this.changes['solution']
-    this.current = this.changes['change_id']
+    this.value = change['solution']
+    this.current = change['change_id']
   }
   bulk_undo(num) {
     let change = this.changes[Number.toString((this.current + num))]
-    this.value = this.changes['solution']
+    this.value = change['solution']
   }
   bulk_redo(num) {
     let change = this.changes[Number.toString(this.length - num)]
-    this.value = this.changes['solution']
+    this.value = change['solution']
   }
 }
 
